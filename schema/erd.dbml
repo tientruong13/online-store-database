@@ -1,0 +1,47 @@
+Table Customer {
+  customer_id integer [pk]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  email varchar(255) [not null, unique]
+  phone varchar(20)
+}
+
+Table Product {
+  product_id integer [pk]
+  product_name varchar(150) [not null]
+  description text
+  price decimal(10,2) [not null]
+  stock_quantity integer [not null]
+}
+
+Table Order {
+  order_id integer [pk]
+  customer_id integer [not null]
+  order_date timestamp [not null]
+  status varchar(20) [not null]
+  total_amount decimal(10,2) [not null]
+}
+
+Table OrderItem {
+  order_id integer [pk]
+  product_id integer [pk]
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null]
+}
+
+Table Payment {
+  payment_id integer [pk]
+  order_id integer [not null]
+  payment_date timestamp [not null]
+  amount decimal(10,2) [not null]
+  payment_method varchar(30) [not null]
+  payment_status varchar(20) [not null]
+}
+
+Ref: Order.customer_id > Customer.customer_id
+
+Ref: OrderItem.order_id > Order.order_id
+
+Ref: OrderItem.product_id > Product.product_id
+
+Ref: Payment.order_id > Order.order_id
